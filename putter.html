@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Claude Test – Puter.js</title>
+  <script src="https://js.puter.com/v2/"></script>
+</head>
+<body style="font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto;">
+
+  <h1>Claude (Sonnet 4) Prompt Test</h1>
+
+  <textarea id="prompt" rows="4" style="width: 100%; padding: 1rem;" placeholder="Enter your prompt..."></textarea>
+  <br><br>
+
+  <button onclick="sendToClaude()" style="padding: 0.75rem 1.5rem; font-size: 1rem;">Generate</button>
+
+  <pre id="output" style="margin-top: 2rem; white-space: pre-wrap; background: #111; color: #0f0; padding: 1rem; border-radius: 6px;"></pre>
+
+  <script>
+    async function sendToClaude() {
+      const prompt = document.getElementById('prompt').value;
+      const output = document.getElementById('output');
+      output.textContent = "⏳ Thinking...\n";
+
+      try {
+        const response = await puter.ai.chat(prompt, { model: 'claude-sonnet-4' });
+        const message = response.message?.content?.[0]?.text || JSON.stringify(response);
+        output.textContent = message;
+      } catch (err) {
+        output.textContent = "❌ Error: " + err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>
